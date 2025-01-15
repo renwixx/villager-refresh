@@ -1,0 +1,7 @@
+name: villager-refresh
+version: '1.0-SNAPSHOT'
+main: org.mrflooky.villagerRefresh.VillagerRefresh
+api-version: '1.21'
+authors: [ MrFlooky ]
+description: Allows to ignore gamerule 'doDaylightCycle' for villager trades refresh.
+website: https://github.com/MrFlooky/
