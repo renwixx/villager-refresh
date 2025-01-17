@@ -13,9 +13,9 @@ VillagerRefresh is a lightweight Minecraft plugin that solves the issue with vil
 
 ## Requirements
 
-- Minecraft Server version 1.21+
-- Java 17 or higher
-- Purpur, Paper, or Spigot server software
+- Minecraft Server version 1.21+;
+- Java 17 or higher;
+- Purpur, Paper, or Spigot server software.
 
 ## Installation
 
@@ -24,19 +24,22 @@ The plugin will generate a default configuration file at `plugins/villager-refre
 
 ## Configuration
 
-The plugin uses a simple configuration file (config.yml):
+The plugin uses a simple configuration file (EXAMPLE of config.yml):
 ```
-# Time interval between trade refreshes (in minutes)
+# Trade update interval in minutes
 refresh-interval-minutes: 20
+# Log refreshes into console?
+log-refreshes: true
 ```
 
 ## Permissions
 
-The plugin doesn't require any special permissions to function.
+Plugin has permission `villagerrefresh.commands` to prevent regular players use plugin commands.
 
 ## Commands
 
-Currently, the plugin doesn't include any commands. All functionality is automatic.
+- `/vrefresh reload` - reload config
+- `/vrefresh set [minutes]` - set interval for refreshing villagers & reload config
 
 ## Support
 
