@@ -1,2 +1,4 @@
 # Trade update interval in minutes
 refresh-interval-minutes: 10
+# Log refreshes into console?
+log-refreshes: true
