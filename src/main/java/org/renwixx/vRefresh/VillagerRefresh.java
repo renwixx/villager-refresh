@@ -1,11 +1,10 @@
-package org.mrflooky.villagerRefresh;
+package org.renwixx.vRefresh;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Villager;
-import org.bukkit.entity.memory.MemoryKey;
 import org.bukkit.inventory.MerchantRecipe;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.event.Listener;
@@ -36,8 +35,7 @@ public final class VillagerRefresh extends JavaPlugin implements Listener, TabCo
         Bukkit.getScheduler().runTaskTimer(this, () -> {
             getServer().getWorlds().forEach(world -> world.getEntitiesByClass(Villager.class).forEach(villager -> {
                 if (villager.getProfession() != Villager.Profession.NONE &&
-                        villager.getProfession() != Villager.Profession.NITWIT &&
-                        villager.getMemory(MemoryKey.JOB_SITE) != null) {
+                        villager.getProfession() != Villager.Profession.NITWIT) {
                     List<MerchantRecipe> newRecipes = new ArrayList<>();
                     for (MerchantRecipe recipe : villager.getRecipes()) {
                         MerchantRecipe newRecipe = new MerchantRecipe(

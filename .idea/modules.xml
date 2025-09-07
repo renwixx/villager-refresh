@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/villager-refresh.iml" filepath="$PROJECT_DIR$/villager-refresh.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/villager-refresh.iml" filepath="$PROJECT_DIR$/.idea/villager-refresh.iml" />
     </modules>
   </component>
 </project>
