@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Villager;
 import org.bukkit.inventory.MerchantRecipe;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -32,27 +33,33 @@ public final class VillagerRefresh extends JavaPlugin implements Listener, TabCo
 
     private void registerVillagerRefreshTask() {
         long refreshInterval = getConfig().getLong("refresh-interval-minutes", 20) * 20 * 60;
+
         Bukkit.getScheduler().runTaskTimer(this, () -> {
-            getServer().getWorlds().forEach(world -> world.getEntitiesByClass(Villager.class).forEach(villager -> {
-                if (villager.getProfession() != Villager.Profession.NONE &&
-                        villager.getProfession() != Villager.Profession.NITWIT) {
-                    List<MerchantRecipe> newRecipes = new ArrayList<>();
-                    for (MerchantRecipe recipe : villager.getRecipes()) {
-                        MerchantRecipe newRecipe = new MerchantRecipe(
-                                recipe.getResult(),
-                                0,
-                                recipe.getMaxUses(),
-                                recipe.hasExperienceReward(),
-                                recipe.getVillagerExperience(),
-                                recipe.getPriceMultiplier()
-                        );
-                        newRecipe.setIngredients(recipe.getIngredients());
-                        newRecipes.add(newRecipe);
+            getServer().getWorlds().forEach(world -> {
+                for (Entity entity : world.getEntities()) {
+                    if (entity instanceof Villager) {
+                        Villager villager = (Villager) entity;
+
+                        if (!villager.getRecipes().isEmpty()) {
+                            List<MerchantRecipe> newRecipes = new ArrayList<>();
+                            for (MerchantRecipe recipe : villager.getRecipes()) {
+                                MerchantRecipe newRecipe = new MerchantRecipe(
+                                        recipe.getResult(),
+                                        0,
+                                        recipe.getMaxUses(),
+                                        recipe.hasExperienceReward()
+                                );
+                                newRecipe.setIngredients(recipe.getIngredients());
+                                newRecipes.add(newRecipe);
+                            }
+                            villager.setRecipes(newRecipes);
+                        }
                     }
-                    villager.setRecipes(newRecipes);
                 }
-            }));
-            getLogger().info("Trades refreshed for all villagers!");
+            });
+            if (getConfig().getBoolean("log-refreshes", true)) {
+                getLogger().info("Trades refreshed for all villagers!");
+            }
         }, 0L, refreshInterval);
     }
 
@@ -73,8 +80,10 @@ public final class VillagerRefresh extends JavaPlugin implements Listener, TabCo
             return true;
         }
         if (task.equals("set")) {
-            if (args.length == 1)
+            if (args.length == 1) {
                 sender.sendMessage("[VillagerRefresh] Missing argument [minutes]!");
+                return true;
+            }
             try {
                 int interval = Integer.parseInt(args[1]);
                 getConfig().set("refresh-interval-minutes", interval);
@@ -87,10 +96,9 @@ public final class VillagerRefresh extends JavaPlugin implements Listener, TabCo
             }
             return true;
         }
-        sender.sendMessage("""
-                [VillagerRefresh] Commands:
-                /vrefresh reload: Reload config file.
-                /vrefresh set [minutes]: Set interval to refresh.""");
+        sender.sendMessage("[VillagerRefresh] Commands:");
+        sender.sendMessage("/vrefresh reload: Reload config file.");
+        sender.sendMessage("/vrefresh set [minutes]: Set interval to refresh.");
         return true;
     }
 
