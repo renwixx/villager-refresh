@@ -13,9 +13,9 @@ VillagerRefresh is a lightweight Minecraft plugin that solves the issue with vil
 
 ## Requirements
 
-- Minecraft Server version 1.21+;
-- Java 17 or higher;
-- Purpur, Paper, or Spigot server software.
+- Minecraft Server version 1.12.2-latest;
+- Java 8 or higher;
+- Bukkit-baset core (Spigot, Paper, Purpur etc.) server software.
 
 ## Installation
 
